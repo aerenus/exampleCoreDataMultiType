@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class">
+        <attribute name="data1string" optional="YES" attributeType="String"/>
+        <attribute name="data2string" optional="YES" attributeType="String"/>
+        <attribute name="data3double" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="data4bin" optional="YES" attributeType="Binary"/>
+        <attribute name="data5decimal" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="data6date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="data7int" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
+    <elements>
+        <element name="Entity" positionX="-63" positionY="-18" width="128" height="163"/>
+    </elements>
+</model>
