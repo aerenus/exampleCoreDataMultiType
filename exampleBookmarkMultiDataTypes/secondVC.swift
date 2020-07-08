@@ -69,9 +69,9 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         if let data1stringObj = data1string.text{newObj.setValue(data1stringObj, forKey: "data1string")}
         if let data2stringObj = data2string.text{newObj.setValue(data2stringObj, forKey: "data2string")}
         if let data3doubleObj = Double(data3double.text!){newObj.setValue(data3doubleObj, forKey: "data3double")}
-        newObj.setValue(nil, forKey: "data5decimal")
-        newObj.setValue(nil, forKey: "data6date")
-        newObj.setValue(nil, forKey: "data7int")
+        //newObj.setValue(nil, forKey: "data5decimal")
+        //newObj.setValue(nil, forKey: "data6date")
+        //newObj.setValue(nil, forKey: "data7int")
         
         //unique verilen UUID
         newObj.setValue(UUID(), forKey: "id")
@@ -79,6 +79,7 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         //secilen img
         let img = data4bin.image!.jpegData(compressionQuality: 0.7)
         newObj.setValue(img, forKey: "data4bin")
+        
         
         do {
             try context.save()
