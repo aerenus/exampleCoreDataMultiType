@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -43,20 +44,48 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
     }
     
-    //didFinishPick...
+    //didFinishPick... keyi ile secilen imagein areaya yazilmasi
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         data4bin.image = info[.originalImage] as? UIImage
         self.dismiss(animated: true, completion: nil)
     }
     
-    //fonksiyon detayi
+    //hide keyboard func
     @objc func hideKeyboard() {
         view.endEditing(true)
     }
     
     @IBAction func saveButton(_ sender: Any) {
-        
         print("save clicked.")
+        // AppDelegate icini miras aliyoruz
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        // contexti local dosyaya getirdik
+        let context = appDelegate.persistentContainer.viewContext
+        // contexti kullaniyoruz // import CoreData gerekli
+        let newObj = NSEntityDescription.insertNewObject(forEntityName: "Entity", into: context)
+        
+        //farkli data tiplerini convert ederek newObj.setValue ile yaziyoruz
+        //userDefaults ile ayni sekilde
+        if let data1stringObj = data1string.text{newObj.setValue(data1stringObj, forKey: "data1string")}
+        if let data2stringObj = data2string.text{newObj.setValue(data2stringObj, forKey: "data2string")}
+        if let data3doubleObj = Double(data3double.text!){newObj.setValue(data3doubleObj, forKey: "data3double")}
+        newObj.setValue(nil, forKey: "data5decimal")
+        newObj.setValue(nil, forKey: "data6date")
+        newObj.setValue(nil, forKey: "data7int")
+        
+        //unique verilen UUID
+        newObj.setValue(UUID(), forKey: "id")
+        
+        //secilen img
+        let img = data4bin.image!.jpegData(compressionQuality: 0.7)
+        newObj.setValue(img, forKey: "data4bin")
+        
+        do {
+            try context.save()
+            print("save ok")
+        } catch {
+            print("save err.")
+        }
     }
     
     
