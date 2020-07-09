@@ -18,6 +18,7 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBOutlet weak var data5decimal: UITextField!
     @IBOutlet weak var data6date: UITextField!
     @IBOutlet weak var data7int: UITextField!
+    @IBOutlet weak var saveBTN: UIButton!
     
     var chosenName : String = ""
     var chosenUUID : UUID?
@@ -29,7 +30,8 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             //coredata gelsin
             let stringUUID = chosenUUID!.uuidString
             print(stringUUID)
-            
+            saveBTN.isEnabled = false
+            data4bin.isUserInteractionEnabled = false
             
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
@@ -79,12 +81,13 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     
     //gorseli sectiriyoruz on imageTap
     @objc func imagetap() {
+        if chosenName != "" { } else {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = .photoLibrary
         picker.allowsEditing = true
         present(picker, animated: true, completion:  nil)
-        
+        }
     }
     
     //didFinishPick... keyi ile secilen imagein areaya yazilmasi
