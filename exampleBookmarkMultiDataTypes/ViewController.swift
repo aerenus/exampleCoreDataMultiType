@@ -18,7 +18,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        let container = NSPersistentContainer(name: "exampleBookmarkMultiDataTypes")
+        print("File name:")
+        print(container.persistentStoreDescriptions.first?.url)
+        
         //viewDidLoad icerisinde navigasyone .add ile ekleme butonu
         //action olarak addbuttonclicked cagir
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addButtonClicked))
@@ -26,6 +30,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         table.delegate = self
         table.dataSource = self
+        
+        //fonksiyonu cagiriyoruz
+        getData()
     }
     
     
@@ -42,24 +49,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         do {
             
             let results  = try context.fetch(fetchRequest)
-            print(results)
             for result in results as! [NSManagedObject]{
                 if let data1string = result.value(forKey: "data1string") as? String{
                     self.data1stringArray.append(data1string)
-                    print(data1string)
                 }
                 
                 if let id = result.value(forKey: "id") as? UUID {
                     self.idArray.append(id)
                 }
                 
-                self.table.reloadData()
+                
             }
             
         } catch {
             print("err.")
         }
-        
+        self.table.reloadData()
+        print("Total \(idArray.count) rows listed.")
         
     }
     
@@ -73,7 +79,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(idArray.count)
+        print("Row no \(idArray.count) is listing.")
         return idArray.count
     }
     

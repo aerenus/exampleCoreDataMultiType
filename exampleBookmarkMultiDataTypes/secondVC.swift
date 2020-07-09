@@ -67,8 +67,12 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         //farkli data tiplerini convert ederek newObj.setValue ile yaziyoruz
         //userDefaults ile ayni sekilde
         if let data1stringObj = data1string.text{newObj.setValue(data1stringObj, forKey: "data1string")}
-        if let data2stringObj = data2string.text{newObj.setValue(data2stringObj, forKey: "data2string")}
-        if let data3doubleObj = Double(data3double.text!){newObj.setValue(data3doubleObj, forKey: "data3double")}
+        
+        newObj.setValue("test", forKey: "data2string")
+        print("\(data1string.text!) taken")
+        print("\(data2string.text!) taken")
+        //if let data2stringObj = data2string.text{newObj.setValue(data2stringObj, forKey: "data2string")}
+        //if let data3doubleObj = Double(data3double.text!){newObj.setValue(data3doubleObj, forKey: "data3double")}
         //newObj.setValue(nil, forKey: "data5decimal")
         //newObj.setValue(nil, forKey: "data6date")
         //newObj.setValue(nil, forKey: "data7int")
@@ -84,6 +88,7 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         do {
             try context.save()
             print("save ok")
+            navigationController?.popToRootViewController(animated: true)
         } catch {
             print("save err.")
         }
