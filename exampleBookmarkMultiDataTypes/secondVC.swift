@@ -19,11 +19,54 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBOutlet weak var data6date: UITextField!
     @IBOutlet weak var data7int: UITextField!
     
+    var chosenName : String = ""
+    var chosenUUID : UUID?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if chosenName != "" {
+            //coredata gelsin
+            let stringUUID = chosenUUID!.uuidString
+            print(stringUUID)
+            
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
+            
+            fetchRequest.predicate = NSPredicate(format: "id = %@", stringUUID)
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            do {
+                let results = try context.fetch(fetchRequest)
+                if results.count > 0 {
+                    for result in results as! [NSManagedObject]{
+                        
+                        if let data1string = result.value(forKey: "data1string") as? String{
+                            self.data1string.text = data1string
+                        }
+                        
+                        if let data4bin = result.value(forKey: "data4bin") as? Data {
+                            let takenIMG = UIImage(data: data4bin)
+                            self.data4bin.image = takenIMG
+                        }
+                        
+                    }
+                }
+            } catch {
+                print("err!")
+            }
+        }
+        
+        
+        else {
+            data1string.text = ""
+            data2string.text = ""
+        }
+        
 
-        // Do any additional setup after loading the view.
+        
         //gestureRecognizer ekranin herhangi bir yerinde tiklandiginda hideKeyboard fonksiyonu gelsin
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(gestureRecognizer)
@@ -81,17 +124,23 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         newObj.setValue(UUID(), forKey: "id")
         
         //secilen img
-        let img = data4bin.image!.jpegData(compressionQuality: 0.7)
+        let img = data4bin.image!.jpegData(compressionQuality: 0.4)
         newObj.setValue(img, forKey: "data4bin")
         
         
         do {
             try context.save()
             print("save ok")
-            navigationController?.popToRootViewController(animated: true)
+            //ana view controller'a post ederek s3db icinden aldigi datayi yeniletecegiz
+            //php post ile ayni mantik
+            NotificationCenter.default.post(name: NSNotification.Name("newValInserted"), object: nil)
+            self.navigationController?.popToRootViewController(animated: true)
         } catch {
             print("save err.")
         }
+        
+        
+        
     }
     
     
