@@ -26,6 +26,8 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       
+        
         if chosenName != "" {
             //coredata gelsin
             let stringUUID = chosenUUID!.uuidString
@@ -115,8 +117,8 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         if let data1stringObj = data1string.text{newObj.setValue(data1stringObj, forKey: "data1string")}
         
         newObj.setValue("test", forKey: "data2string")
-        print("\(data1string.text!) taken")
-        print("\(data2string.text!) taken")
+        //print("\(data1string.text!) taken")
+        //print("\(data2string.text!) taken")
         //if let data2stringObj = data2string.text{newObj.setValue(data2stringObj, forKey: "data2string")}
         //if let data3doubleObj = Double(data3double.text!){newObj.setValue(data3doubleObj, forKey: "data3double")}
         //newObj.setValue(nil, forKey: "data5decimal")
@@ -144,7 +146,12 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         
         
-        } else { print("cannot be empty")}
+        } else {
+            let alert = UIAlertController(title: "Cannot be empty", message: "First value cannot be emplty. Please fill and try again.", preferredStyle: .alert)
+            let alertOK = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(alertOK)
+            self.present(alert, animated: true, completion: nil)
+            print("cannot be empty")}
     }
     
     
