@@ -130,7 +130,7 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         let img = data4bin.image!.jpegData(compressionQuality: 0.4)
         newObj.setValue(img, forKey: "data4bin")
         
-        
+        if data1string.text != "" {
         do {
             try context.save()
             print("save ok")
@@ -144,7 +144,9 @@ class secondVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         
         
+        } else { print("cannot be empty")}
     }
+    
     
     
     @IBAction func keyboardButton(_ sender: Any) {
